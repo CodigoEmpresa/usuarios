@@ -24,8 +24,13 @@ class UsuariosServiceProvider extends ServiceProvider
 		$this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'usuarios');
 
 		$this->loadViewsFrom(__DIR__ . '/../../resources/views', 'usuarios');
+		
 		$this->publishes([
 	        __DIR__.'/../../config/usuarios.php' => config_path('usuarios.php'),
+	    ]);
+
+	    $this->publishes([
+	        __DIR__.'/../../resources/views' => resource_path('views/idrd/usuarios'),
 	    ]);
 	}
 
