@@ -1,0 +1,24 @@
+{
+    "name": "idrd/usuarios",
+    "description": "Gestor de usuarios",
+    "authors": [
+        {
+            "name": "Jonathan Castro",
+            "email": "jonathan.castro@idrd.gov.co"
+        }
+    ],
+    "require": { 
+        "php": ">=5.5.9", 
+        "illuminate/support": "5.1.*" 
+    }, 
+    "autoload": { 
+        "classmap": [ 
+            "src/migrations"
+        ], 
+        "psr-4": { 
+            "Idrd\\Usuarios\\": "src/Idrd/Usuarios" 
+        } 
+    }, 
+    "minimum-stability": "dev",
+    "require": {}
+}
