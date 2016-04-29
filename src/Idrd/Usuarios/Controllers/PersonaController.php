@@ -8,9 +8,6 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Validator;
-use App\Documento;
-use App\Pais;
-use App\Etnia;
 
 class PersonaController extends Controller {
 
@@ -26,7 +23,10 @@ class PersonaController extends Controller {
 		$perPage = 10;
 		$page = $request->input('page' , 1);
 		$pagiData = $this->repositorio_personas->obtenerPaginados(1, $perPage);
-		
+		$documento = app()->make(config('usuarios.modelo_documento'));
+		$paises = app()->make(config('usuarios.modelo_pais'));
+		$etnias = app()->make(config('usuarios.modelo_etnia'));
+
 		$lista = [
 			'personas' => new LengthAwarePaginator(
 	            $pagiData->items,
@@ -35,9 +35,9 @@ class PersonaController extends Controller {
 	            Paginator::resolveCurrentPage(),
 	        	['path' => Paginator::resolveCurrentPath()]
 	        ),
-	        'documentos' => Documento::all(),
-	        'paises' => Pais::all(),
-	        'etnias' => Etnia::all(),
+	        'documentos' => $documento->all(),
+	        'paises' => $paises->all(),
+	        'etnias' => $etnias->all(),
 			'status' => session('status')
 		];
 
