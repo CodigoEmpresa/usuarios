@@ -5,6 +5,7 @@ return array(
   'conexion' => 'db_principal', 
    
   'prefijo_ruta' => 'personas', 
+  'seccion' => 'Personas', 
  
   'modelo_persona' => 'App\Persona', 
   'modelo_documento' => 'App\Documento', 
