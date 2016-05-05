@@ -32,6 +32,10 @@ class UsuariosServiceProvider extends ServiceProvider
 	    $this->publishes([
 	        __DIR__.'/../../resources/views' => resource_path('views/idrd/usuarios'),
 	    ]);
+
+	     $this->publishes([
+	        __DIR__.'/../../resources/assets' => public_path('Js/usuarios'),
+	    ], 'public');
 	}
 
 	/**
