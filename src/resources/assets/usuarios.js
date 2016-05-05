@@ -125,6 +125,12 @@ $(function()
 	}
 
 	//Eventos
+	$('input[name="buscador"]').on('keyup', function(e){
+		var code = e.which; //http://stackoverflow.com/questions/3462995/jquery-keydown-keypress-keyup-enterkey-detection
+    	if(code==13)
+    		buscar(e);
+	});
+
 	$('#buscar').on('click', function(e)
 	{
 		var role = $(this).data('role');
