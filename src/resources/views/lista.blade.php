@@ -19,9 +19,14 @@
       		<input name="buscador" type="text" class="form-control" placeholder="Buscar">
       		<span class="input-group-btn">
         		<button id="buscar" data-role="buscar" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-        		<button id="crear" data-role="crear" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
       		</span>
     	</div>
+	</div>
+	<div class="col-xs-12">
+		<hr>
+	</div>
+	<div class="col-xs-12">
+        <button id="crear" data-role="crear" class="btn btn-primary" type="button">Crear persona</button>
 	</div>
 	<div class="col-xs-12">
 		<br>
