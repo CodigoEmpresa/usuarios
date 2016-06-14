@@ -5,7 +5,8 @@ return array(
   'conexion' => 'db_principal', 
    
   'prefijo_ruta' => 'personas', 
-  'seccion' => 'Personas', 
+
+  'prefijo_ruta_modulo' => 'actividad', 
  
   'modelo_persona' => 'App\Persona', 
   'modelo_documento' => 'App\Documento', 
@@ -13,6 +14,8 @@ return array(
   'modelo_ciudad' => 'App\Ciudad', 
   'modelo_genero' => 'App\Genero', 
   'modelo_etnia' => 'App\Etnia', 
+  'modelo_tipo' => 'App\Tipo',
+  
    
   //vistas que carga las vistas 
   'vista_lista' => 'list', 

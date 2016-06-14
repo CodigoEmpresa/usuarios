@@ -36,4 +36,9 @@ class Persona extends Eloquent {
 	{
 		return $this->belongsTo(config('usuarios.modelo_etnia'), 'Id_Etnia');
 	}
+
+	public function tipo()
+	{
+		return $this->belongsToMany(config('usuarios.modelo_tipo'), 'persona_tipo', 'Id_Persona', 'Id_Tipo');
+	}
 }
