@@ -94,4 +94,9 @@ class PersonaController extends Controller {
 
 	}
 
+	public function buscarPersonaTipo(Request $request, $id_tipo){
+		$personas = $this->repositorio_personas->buscarPersonaTipo($id_tipo);
+		return response()->json($personas);
+	}
+
 }

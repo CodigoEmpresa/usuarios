@@ -16,7 +16,7 @@ class EloquentPersona implements PersonaInterface {
 
 	public function guardar($input)
 	{
-		$model = $this->model();
+		$model = $this->model(self::MODELO_PERSONA);
 		$sede =  $model->newInstance(array());
 
 		return $this->store($sede, $input);
@@ -24,7 +24,7 @@ class EloquentPersona implements PersonaInterface {
 
 	public function actualizar($input)
 	{
-		$model = $this->model();
+		$model = $this->model(self::MODELO_PERSONA);
 		$sede = $model->find($input['Id_Persona']);
 
 		return $this->store($sede, $input);
@@ -32,7 +32,7 @@ class EloquentPersona implements PersonaInterface {
 
 	public function eliminar($id)
 	{
-		$model = $this->model();
+		$model = $this->model(self::MODELO_PERSONA);
 		$persona = $model->find($id);
 
 		if($persona->delete())
@@ -43,7 +43,7 @@ class EloquentPersona implements PersonaInterface {
 
 	public function obtener($id)
 	{
-		$model = $this->model();
+		$model = $this->model(self::MODELO_PERSONA);
 		$persona = $model->find($id);
 
 		return $persona;
@@ -51,7 +51,7 @@ class EloquentPersona implements PersonaInterface {
  
 	public function obtenerPaginados($pagina, $limite)
 	{
-		$model = $this->model();
+		$model = $this->model(self::MODELO_PERSONA);
 
 		$personas = $model->orderBy('Primer_Apellido', 'asc')
 					->orderBy('Primer_Nombre', 'asc')
@@ -76,7 +76,7 @@ class EloquentPersona implements PersonaInterface {
 
 	public function buscar($key)
 	{
-		$model = $this->model();
+		$model = $this->model(self::MODELO_PERSONA);
 
 		return $model->with('tipoDocumento')
 					->whereRaw('CONCAT (Cedula, " ", Primer_Apellido, " ", Segundo_Apellido, " ", Primer_Nombre, " ", Segundo_Nombre) LIKE "%'.$key.'%"', array())
@@ -84,6 +84,16 @@ class EloquentPersona implements PersonaInterface {
 					->orderBy('Primer_Nombre', 'asc')
 					->take(100)
 					->get();
+	}
+
+	public function buscarPersonaTipo($id_tipo)
+	{
+		$model = $this->model(self::MODELO_TIPO);	
+		$tipo = $model->with('personas')
+					->where('Id_Tipo', $id_tipo)
+					->first();
+
+		return $tipo->personas;
 	}
 
 	private function store($model, $input)
@@ -107,17 +117,19 @@ class EloquentPersona implements PersonaInterface {
 
 	private function totalPersonas()
 	{
-		$model = $this->model();
+		$model = $this->model(self::MODELO_PERSONA);
 		$personas = $model->count();
 		return $personas;
 	}
 
-	private function model()
+	private function model($model)
 	{
-		$this->model = $this->app['config']->get('usuarios.modelo_persona');
+		$this->model = $this->app['config']->get('usuarios.'.$model);
 		if ($this->model)
 			return $this->app[$this->model];
 		
 		throw new \Exception("No se encuentra el modelo especificado en idrd/personas/config/config.php", 639);
 	}
+
+
 }

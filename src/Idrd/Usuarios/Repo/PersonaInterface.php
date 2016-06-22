@@ -4,6 +4,8 @@ namespace Idrd\Usuarios\Repo;
 
 interface PersonaInterface {
 
+	const MODELO_PERSONA = 'modelo_persona';
+	const MODELO_TIPO = 'modelo_tipo';
 	/**
 	 * [guardar Guarda una nueva persona]
 	 * @param  [array] $input [Datos de la nueva persona]
@@ -46,5 +48,15 @@ interface PersonaInterface {
 	 * @return [mixed]     [Idrd\Usuarios\Repo\Persona o NULL si no existe la persona]
 	 */
 	public function buscar($key);
+
+
+	/**
+	 * [buscar una persoan por un tipo persona]
+	 * @param  [key] $key  [Llave para buscar]
+	 * @return [mixed]     [Idrd\Usuarios\Repo\Persona o NULL si no existe la persona]
+	 */
+	public function buscarPersonaTipo($id_tipo);
+
+
 
 } 
