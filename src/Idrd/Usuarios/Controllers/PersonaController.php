@@ -22,7 +22,7 @@ class PersonaController extends Controller {
 	{	
 		$perPage = 10;
 		$page = $request->input('page' , 1);
-		$pagiData = $this->repositorio_personas->obtenerPaginados(1, $perPage);
+		$pagiData = $this->repositorio_personas->obtenerPaginados($page, $perPage);
 		$documento = app()->make(config('usuarios.modelo_documento'));
 		$paises = app()->make(config('usuarios.modelo_pais'));
 		$etnias = app()->make(config('usuarios.modelo_etnia'));
