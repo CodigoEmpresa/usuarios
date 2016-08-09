@@ -98,8 +98,9 @@ return array(
  
   'modelo_persona' => 'App\Persona', 
   'modelo_documento' => 'App\Documento', 
-  'modelo_pais' => 'App\Pais', 
-  'modelo_ciudad' => 'App\Ciudad', 
+  'modelo_pais' => 'App\Pais',
+  'modelo_ciudad' => 'App\Ciudad',
+  'modelo_departamento' => 'App\Departamento',
   'modelo_genero' => 'App\Genero', 
   'modelo_etnia' => 'App\Etnia', 
    
