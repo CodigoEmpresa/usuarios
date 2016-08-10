@@ -16,7 +16,7 @@
 	</div>
 	<div class="col-xs-12">
 		<div class="input-group">
-      		<input name="buscador" type="text" class="form-control" placeholder="Buscar">
+                    <input name="buscador" type="text" class="form-control" placeholder="Buscar" id="buscador" onkeypress="return ValidaCampo(event);">
       		<span class="input-group-btn">
         		<button id="buscar" data-role="buscar" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       		</span>
