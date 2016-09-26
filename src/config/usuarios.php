@@ -4,8 +4,8 @@ return array(
  
   'conexion' => 'db_principal', 
    
+  'seccion' => 'Personas', 
   'prefijo_ruta' => 'personas', 
-
   'prefijo_ruta_modulo' => 'actividad', 
  
   'modelo_persona' => 'App\Persona', 
