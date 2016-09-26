@@ -17,17 +17,17 @@ class EloquentPersona implements PersonaInterface {
 	public function guardar($input)
 	{
 		$model = $this->model(self::MODELO_PERSONA);
-		$sede =  $model->newInstance(array());
+		$persona =  $model->newInstance(array());
 
-		return $this->store($sede, $input);
+		return $this->store($persona, $input);
 	}
 
 	public function actualizar($input)
 	{
 		$model = $this->model(self::MODELO_PERSONA);
-		$sede = $model->find($input['Id_Persona']);
+		$persona = $model->find($input['Id_Persona']);
 
-		return $this->store($sede, $input);
+		return $this->store($persona, $input);
 	}
 
 	public function eliminar($id)
