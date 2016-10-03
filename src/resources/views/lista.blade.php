@@ -1,78 +1,99 @@
 @section('script')
-	@parent
+    @parent
 
-    <script src="{{ asset('public/Js/usuarios/usuarios.js') }}"></script>	
+    <script src="{{ asset('public/Js/usuarios/usuarios.js') }}"></script>   
 @stop
 
+@section('style')
+    @parent
+    
+    <style>
+        .glyphicon.spin-r {
+            -webkit-animation: glyphicon-spin-r 1s infinite linear;
+            animation: glyphicon-spin-r 1s infinite linear;
+        }
 
-    <div class="content">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Buscar personas</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">
-                            <div id="alerta" class="col-xs-12" style="display:none;">
-                                <div class="alert alert-success alert-dismissible" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        Datos actualizados satisfactoriamente.
-                                </div>                                
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="input-group">
-                                    <input name="buscador" type="text" class="form-control" placeholder="Buscar" id="buscador" onkeypress="return ValidaCampo(event);">
-                                    <span class="input-group-btn">
-                                        <button id="buscar" data-role="buscar" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                    </span>
-                                </div>
-                                <div tabindex="-1" id="mensaje-incorrectoB" class=" text-left alert alert-success alert-danger" role="alert" style="display: none; margin-top: 10px;">                                    
-                                    <strong>Error </strong> <span id="mensajeIncorrectoB"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        @-webkit-keyframes spin-r {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(359deg);
+                transform: rotate(359deg);
+            }
+        }
+
+        @keyframes glyphicon-spin-r {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(359deg);
+                transform: rotate(359deg);
+            }
+        }
+    </style>
+@stop
+    
+<div class="content">
+    <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">
+        <div id="alerta" class="col-xs-12" style="display:none;">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Datos actualizados satisfactoriamente.
+            </div>                                
+        </div>
+        <div class="col-xs-12 form-group">
+            <div class="input-group">
+                <input name="buscador" type="text" class="form-control" placeholder="Buscar" id="buscador">
+                <span class="input-group-btn">
+                    <button id="buscar" data-role="buscar" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </span>
             </div>
-    </div>    
-    <div class="col-xs-12">
-        <button autocomplete="off" data-loading-text="Cargando..." id="crear" data-role="crear" class="btn btn-primary" type="button">Crear persona</button>
-    </div>
-    <div class="col-xs-12"><br></div>
-    <div class="col-xs-12">
-        <ul class="list-group" id="personas">
-            @foreach($personas as $persona)
-                <li class="list-group-item">
-                    <h5 class="list-group-item-heading">
-                        {{ strtoupper($persona['Primer_Apellido'].' '.$persona['Segundo_Apellido'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']) }}
-                        <a id="editM" data-role="editar" data-rel="{{ $persona['Id_Persona'] }}" class="pull-right btn btn-primary btn-xs">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </a>
-                    </h5>
-                    <p class="list-group-item-text">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: {{ $persona->tipoDocumento['Nombre_TipoDocumento'].' '.$persona['Cedula'] }}</small></div>
+        </div>
+        <div class="col-xs-12"><br></div>
+        <div class="col-xs-12">
+            <button data-loading-text="Cargando..." id="crear" data-role="crear" class="btn btn-primary" type="button">Crear persona</button>
+        </div>
+        <div class="col-xs-12"><br></div>
+        <div class="col-xs-12">
+            <ul class="list-group" id="personas">
+                @foreach($personas as $persona)
+                    <li class="list-group-item">
+                        <h5 class="list-group-item-heading">
+                            {{ strtoupper($persona['Primer_Apellido'].' '.$persona['Segundo_Apellido'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']) }}
+                            <a id="editM" data-role="editar" data-rel="{{ $persona['Id_Persona'] }}" class="pull-right btn btn-primary btn-xs">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </a>
+                        </h5>
+                        <p class="list-group-item-text">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: {{ $persona->tipoDocumento['Nombre_TipoDocumento'].' '.$persona['Cedula'] }}</small></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </p>
-                </li>
-            @endforeach
-        </ul>
-    </div>
-    <div id="paginador" class="col-xs-12">{!! $personas->render() !!}</div>    
-    <!-- Modal formulario  persona -->
-    <div class="modal fade" id="modal_form_persona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<form action="" id="form_persona">
+                        </p>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        <div id="paginador" class="col-xs-12">{!! $personas->render() !!}</div>    
+        <!-- Modal formulario  persona -->
+        <div class="modal fade" id="modal_form_persona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <form action="" id="form_persona">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">Crear o editar persona.</h4>
                         </div>
-	      		<div class="modal-body">
+                        <div class="modal-body">
                             <fieldset>
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
@@ -167,13 +188,15 @@
                                     </div>
                                 </div>
                             </fieldset>
-	      		</div>
-	      		<div class="modal-footer">
+                        </div>
+                        <div class="modal-footer">
                             <input type="hidden" name="Id_Persona" value="0">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                             <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
-	      		</div>
-	    	</div>
-            </form>
-  	</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+</div>

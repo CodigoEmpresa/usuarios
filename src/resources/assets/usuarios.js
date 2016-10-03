@@ -3,56 +3,62 @@ $(function()
     var URL = $('#main_persona').data('url');
     var $personas_actuales = $('#personas').html();
 
+    function validarCampo(e)
+    {
+        var code = (document.all) ? e.keyCode : e.which;
+        if (code == 8) return true;
+        var key = String.fromCharCode(code);
+        return /[A-Za-z0-9\s]/.test(key);
+    }
+
     function reset(e){
         $('input[name="buscador"]').val('');
-        $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-search');
+        $('#buscar span').removeClass('glyphicon-refresh spin-r').addClass('glyphicon-search');
         $('#buscar span').empty();
-                document.getElementById("buscar").disabled = false;
-                document.getElementById("buscador").disabled = false;
+        $("#buscar").prop('disabled', false);
+        $("#buscador").prop('disabled', false);
         $('#personas').html($personas_actuales);
         $('#paginador').fadeIn();
     }
 
     function buscar(e){
         var key = $('input[name="buscador"]').val();
-            $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-remove');
-            $('#buscar').data('role', 'reset');
-            $.get(URL+'/service/buscar/'+key,{}, function(data){
-                if(data.length > 0){
-                    var html = '';
-                    $.each(data, function(i, e){
-                        html += '<li class="list-group-item">'+
-                                '<h5 class="list-group-item-heading">'+
-                                    ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+
-                                    '<a data-role="editar" data-rel="'+e['Id_Persona']+'" class="pull-right btn btn-primary btn-xs">'+
-                                        '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'+
-                                    '</a>'+
-                                '</h5>'+
-                                '<p class="list-group-item-text">'+
-                                    '<div class="row">'+
-                                        '<div class="col-xs-12">'+
-                                            '<div class="row">'+
-                                                '<div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small></div>'+
-                                            '</div>'+
+        $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh spin-r');
+        $("#buscador").prop('disabled', true);
+        $('#buscar').data('role', 'reset');
+        $.get(URL+'/service/buscar/'+key,{}, function(data){
+            if(data.length > 0){
+                var html = '';
+                $.each(data, function(i, e){
+                    html += '<li class="list-group-item">'+
+                            '<h5 class="list-group-item-heading">'+
+                                ''+e['Primer_Apellido'].toUpperCase()+' '+e['Segundo_Apellido'].toUpperCase()+' '+e['Primer_Nombre'].toUpperCase()+' '+e['Segundo_Nombre'].toUpperCase()+''+
+                                '<a data-role="editar" data-rel="'+e['Id_Persona']+'" class="pull-right btn btn-primary btn-xs">'+
+                                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'+
+                                '</a>'+
+                            '</h5>'+
+                            '<p class="list-group-item-text">'+
+                                '<div class="row">'+
+                                    '<div class="col-xs-12">'+
+                                        '<div class="row">'+
+                                            '<div class="col-xs-12 col-sm-6 col-md-3"><small>Identificación: '+e.tipo_documento['Nombre_TipoDocumento']+' '+e['Cedula']+'</small></div>'+
                                         '</div>'+
                                     '</div>'+
-                                '</p>'+
-                            '</li>';
-                    });
-                    $('#personas').html(html);
-                    $('#paginador').fadeOut();
-                }else{
-                    $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
-                    $('#buscar span').empty();
-                    document.getElementById("buscar").disabled = false;
-                    $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
-                    $('#paginador').fadeOut();
-                }
-            },'json').done(function(){
-                $('#buscar span').removeClass('glyphicon-refresh').addClass('glyphicon-remove');
-                $('#buscar span').empty();
-                document.getElementById("buscar").disabled = false;
-            });
+                                '</div>'+
+                            '</p>'+
+                        '</li>';
+                });
+                $('#personas').html(html);
+            }else{
+                $('#personas').html( '<li class="list-group-item" style="border:0"><div class="row"><h4 class="list-group-item-heading">No se encuentra ninguna persona registrada con estos datos.</h4></dvi><br>');
+                
+            }
+        },'json').done(function()
+        {
+            $('#paginador').fadeOut();
+            $("#buscar").prop('disabled', false);
+            $('#buscar span').removeClass('glyphicon-search glyphicon-refresh spin-r').addClass('glyphicon-remove');
+        });
     }
     
     function popular_ciudades(id){
@@ -124,38 +130,26 @@ $(function()
         if(code==13) buscar(e);
     });
 
-    $('#buscar').on('click', function(e){
-        $("#mensajeIncorrectoB").empty();
-        $("#mensaje-incorrectoB").fadeOut();
-        $("#buscador").css({ 'border-color': '#CCCCCC' });    
-        $("#buscar").css({ 'border-color': '#CCCCCC' });    
-        var key = $('input[name="buscador"]').val();
-        if(!key && $(this).data('role') == 'buscar'){
-            $("#buscador").css({ 'border-color': '#B94A48' });
-            $("#buscar").css({ 'border-color': '#B94A48' });
-            var texto = $("#mensajeIncorrectoB").html();
+    $('input[name="buscador"]').on('keypress', validarCampo);
 
-            $("#mensajeIncorrectoB").html(texto + '<br>' + 'Debe ingresar un parámetro para realizar la búsqueda.');
-            $("#mensaje-incorrectoB").fadeIn();
-            $('#mensaje-incorrectoB').focus();            
+    $('#buscar').on('click', function(e){  
+        var key = $('input[name="buscador"]').val();
+        if(!key && $(this).data('role') == 'buscar')
+        {
+            $("#buscador").closest('.form-group').addClass('has-error');  
             return false;
-        }        
-        var role = $(this).data('role');               
-        
+        }
+
+        var role = $(this).data('role');
+        $("#buscar").prop('disabled', true);
+
         switch(role){
-            case 'buscar':                
-                $('#buscar span').removeClass('glyphicon-search').addClass('glyphicon-refresh');
-                $('#buscar span').append(' Cargando...');
-                document.getElementById("buscar").disabled = true;
-                document.getElementById("buscador").disabled = true;
+            case 'buscar':
                 $(this).data('role', 'reset');
                 buscar(e);          
             break;
             case 'reset':                 
-                $('#buscar span').removeClass('glyphicon-remove').addClass('glyphicon-refresh');
-                $('#buscar span').append(' Cargando...');
-                document.getElementById("buscar").disabled = true;
-                document.getElementById("buscador").disabled = true;
+                $('#buscar span').removeClass('glyphicon-remove');
                 $(this).data('role', 'buscar');
                 reset(e);
             break;
@@ -183,7 +177,7 @@ $(function()
 
     $('#personas').delegate('a[data-role="editar"]', 'click', function(e){
         var id = $(this).data('rel');
-        $.get(URL+'/service/obtener/'+id,{},function(data){	
+        $.get(URL+'/service/obtener/'+id,{},function(data){ 
             if(data)
             {
                 popular_modal_persona(data);
@@ -230,15 +224,3 @@ $(function()
         e.preventDefault();
     });
 });
-
-
-$('#editM span').removeClass('glyphicon-pencil').addClass('glyphicon-remove');
-
-function ValidaCampo(e)
-{
-    tecla = (document.all) ? e.keyCode : e.which;
-    if (tecla==8) return true;
-     patron =/[A-Za-z0-9\s]/;
-     te = String.fromCharCode(tecla);
-    return patron.test(te);
- }
