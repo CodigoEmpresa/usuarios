@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Facades\Config as Config;
 
 
-class acceso extends Eloquent {
+class Acceso extends Eloquent {
 	
    	protected $table = 'acceso';
        
