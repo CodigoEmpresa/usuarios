@@ -18,6 +18,16 @@ class Persona extends Eloquent {
 		$this->table = config('database.connections.'.$this->connection.'.database').'.'.$this->table;
 	}
 
+    public function acceso()
+	{
+		return $this->hasOne(config('usuarios.modelo_acceso'), 'Id_Persona');
+	}
+
+    public function datos()
+	{
+		return $this->hasOne(config('usuarios.modelo_datos'), 'Id_Persona');
+	}
+
 	public function tipoDocumento()
 	{
 		return $this->belongsTo(config('usuarios.modelo_documento'), 'Id_TipoDocumento');

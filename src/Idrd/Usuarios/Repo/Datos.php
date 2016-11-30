@@ -14,7 +14,8 @@ class Datos extends Eloquent {
     {
         $this->connection = config('usuarios.conexion');
     }
-     public function persona()
+    
+    public function persona()
 	{
 		return $this->belongsTo(config('usuarios.modelo_persona'), 'Id_Persona');
 	}
