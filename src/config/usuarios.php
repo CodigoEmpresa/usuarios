@@ -16,6 +16,8 @@ return array(
   'modelo_genero' => 'App\Genero', 
   'modelo_etnia' => 'App\Etnia', 
   'modelo_tipo' => 'App\Tipo',
+  'modelo_acceso' => 'App\Acceso',
+  'modelo_datos' => 'App\Datos',
   
    
   //vistas que carga las vistas 
