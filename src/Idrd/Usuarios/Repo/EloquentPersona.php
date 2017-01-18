@@ -4,6 +4,7 @@ namespace Idrd\Usuarios\Repo;
 
 use Idrd\Usuarios\Repo\PersonaInterface;
 
+
 class EloquentPersona implements PersonaInterface {
 
 	private $app;

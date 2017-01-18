@@ -18,6 +18,7 @@ return array(
   'modelo_tipo' => 'Idrd\Usuarios\Repo\Tipo',
   'modelo_acceso' => 'Idrd\Usuarios\Repo\Acceso',
   'modelo_datos' => 'Idrd\Usuarios\Repo\Datos',
+  'modelo_asim' => 'Idrd\Usuarios\Repo\ActividadesSim',
   
    
   //vistas que carga las vistas 

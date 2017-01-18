@@ -45,8 +45,7 @@ class PersonaController extends Controller {
 			'seccion' => config('usuarios.seccion'),
 			'lista'	=> view(config('usuarios.lista'), $lista)
 		];
-
-		return view(config('usuarios.vista_lista'), $datos);
+		return view(config('usuarios.vista_lista'),$datos);
 	}
 
 	public function buscar(Request $request, $key)
