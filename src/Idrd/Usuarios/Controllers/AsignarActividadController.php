@@ -4,6 +4,7 @@ namespace Idrd\Usuarios\Controllers;
 
 use App\Http\Controllers\Controller;
 use Idrd\Usuarios\Repo\PersonaInterface;
+use Idrd\Usuarios\Repo\Persona;
 use Idrd\Usuarios\Repo\ActividadesSim;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -47,9 +48,20 @@ class AsignarActividadController extends Controller {
     	return $Actividades;
 	}
 	public function personaActividades(Request $request, $id){
-		$personaActividades = Persona::with('Actividades')->find($id);
-		$actividades = $personaActividades->Actividades()->where('Id_Modulo', $this->id_modulo)->where('Estado', 1)->get();
-		return $actividades;
+
+	/*$personaActividades = ActividadesSim::with(array('persona' => function($query) use ($id)
+	{
+	    $query->where('Id_Persona', $id); 
+	}))->get();*/
+ 		$id_modulo = $this->id_modulo ;
+		$personaActividades = Persona::with(['act' => function($query) use ($id_modulo)
+			{
+				$query->where('Id_Modulo', $id_modulo)
+						->where('Estado', 1);
+			}])->find($id);
+		//$actividades = $personaActividades['act']->where('Id_Modulo',  u$this->id_modulo)->where('Estado', 1);
+		
+		return $personaActividades->act;
 	}
 	public function PersonasActividadesProceso(Request $request){
 
@@ -68,8 +80,8 @@ class AsignarActividadController extends Controller {
 				$i++;
 			
 			}
-			$persona->Actividades()->detach($eliminar);
-			$persona->Actividades()->attach($aprobadas);
+			$persona->act()->sync($eliminar);
+			$persona->act()->sync($aprobadas);
 				$Mensaje = 'Las acticvidades de '.$accesoPersona['Primer_Nombre'].' '.$accesoPersona['Segundo_Nombre'].' '.$accesoPersona['Primer_Apellido'].' '.$accesoPersona['Segundo_Apellido'].' han sido asignadas correctamente.';
 				$Bandera = 1;
 		}else{

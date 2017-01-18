@@ -3,6 +3,7 @@
 namespace Idrd\Usuarios\Repo;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Facades\Config as Config;
 
 class Persona extends Eloquent {
 	
@@ -22,8 +23,15 @@ class Persona extends Eloquent {
 	{
 		return $this->hasOne(config('usuarios.modelo_acceso'), 'Id_Persona');
 	}
-
-    public function datos()
+	
+	
+	 public function act()
+	{
+		return $this->belongsToMany(config('usuarios.modelo_asim'), 'actividad_acceso',  'Id_Persona','Id_Actividad')
+					->withPivot('Estado');
+	}
+	
+      public function datos()
 	{
 		return $this->hasOne(config('usuarios.modelo_datos'), 'Id_Persona');
 	}

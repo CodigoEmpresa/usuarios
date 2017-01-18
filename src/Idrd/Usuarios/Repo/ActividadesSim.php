@@ -3,6 +3,7 @@
 namespace Idrd\Usuarios\Repo;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Facades\Config as Config;
 
 
 class ActividadesSim extends Eloquent
@@ -22,11 +23,11 @@ class ActividadesSim extends Eloquent
 
     public function persona()
 	{
-		return $this->belongsToMany('usuarios.Persona', 'actividad_acceso', 'Id_Actividad', 'Id_Persona');
+		return $this->belongsToMany(config('usuarios.modelo_persona'), 'actividad_acceso', 'Id_Actividad', 'Id_Persona');
 	}
 
 	public function modulo()
 	{
-		return $this->belongsTo('usuarios.Modulo', 'Id_Modulo');
+		return $this->belongsTo(config('usuarios.modelo_modulo'), 'Id_Modulo');
 	}
 }
