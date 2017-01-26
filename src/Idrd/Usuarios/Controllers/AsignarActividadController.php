@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Idrd\Usuarios\Repo\Persona;
 use Idrd\Usuarios\Repo\ActividadesSim;
+use Idrd\Usuarios\Repo\Tipo;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
+use Validator;
 
 class AsignarActividadController extends Controller {
 
@@ -35,12 +37,36 @@ class AsignarActividadController extends Controller {
             'Id' => 'required',
             'Id_Tipo' => 'required',
         ]);
+        
         if ($validator->fails()) {
+        
             return response()->json(["Bandera" => 0, "Mensaje" => ", pero ocurrio un error en la validación de la imagen o su tamaño."]);
-        }else{        
-			$Persona = Persona::find($request->Id);
-			$Persona->tipo()->sync([$request->Id_Tipo]);
-	        return response()->json(["Bandera" => 1, "Mensaje" => "Perfil añadido con éxito."]);
+        
+        }else{     
+
+        	$id_modulo = $this->id_modulo ;   
+
+        	$persona = Persona::with(['tipo' => function($query) use ($id_modulo)
+			{
+				$query->where('Id_Modulo', '<>', $id_modulo);
+			}])->find($request->Id);
+
+			$toSync = [];
+
+			foreach ($persona->tipo as $tipo) 
+			{
+				$toSync[] = $tipo['Id_Tipo'];
+			}
+
+			$toSync[] = intval($request->Id_Tipo);
+
+			$persona->tipo()->sync($toSync);
+			
+	        $Mensaje = 'El tipo ha sido asignadas correctamente.';
+
+			$Bandera = 1;
+
+			return response()->json(["Mensaje" => $Mensaje, "Bandera" => $Bandera]);
     	}
 	}
 
