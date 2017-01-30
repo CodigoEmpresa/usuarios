@@ -46,7 +46,6 @@ class EloquentPersona implements PersonaInterface {
 	{
 		$model = $this->model(self::MODELO_PERSONA);
 		$persona = $model->find($id);
-
 		return $persona;
 	}
  
@@ -111,6 +110,8 @@ class EloquentPersona implements PersonaInterface {
 		$model['Id_Pais'] = $input['Id_Pais'];
 		$model['Id_Genero'] = $input['Id_Genero'];
 		$model['Id_Etnia'] = $input['Id_Etnia'];
+
+
 
 		$model->save();
 		return $model;
