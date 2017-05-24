@@ -16,7 +16,7 @@
             "src/migrations"
         ], 
         "psr-4": { 
-            "Idrd\\Usuarios\\": "src/Idrd/Usuarios" 
+            "Idrd\\": "src/Idrd/Usuarios" 
         } 
     }, 
     "minimum-stability": "dev",
