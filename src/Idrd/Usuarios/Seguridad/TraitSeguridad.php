@@ -11,7 +11,7 @@ trait TraitSeguridad {
     static::creating(function($model)
     {
      \DB::connection('db_principal')->table('seguridad')->insert([ 
-        'Id_Modulo' => 'modulo',
+        'Id_Modulo' => config('usuarios.modulo'),
         'Fecha' => date('Y-m-d H:i:s'),
         'Id_Persona' =>  $_SESSION['Usuario'][0],
         'Tabla' => $model->getTableName(),
@@ -26,7 +26,7 @@ trait TraitSeguridad {
     {
     
      \DB::connection('db_principal')->table('seguridad')->insert([ 
-        'Id_Modulo' => 'modulo',
+        'Id_Modulo' => config('usuarios.modulo'),
         'Fecha' => date('Y-m-d H:i:s'),
         'Id_Persona' => $_SESSION['Usuario'][0],
         'Tabla' => $model->getTableName(),
@@ -41,7 +41,7 @@ trait TraitSeguridad {
     {
     
      \DB::connection('db_principal')->table('seguridad')->insert([ 
-        'Id_Modulo' => 'modulo',
+        'Id_Modulo' => config('usuarios.modulo'),
         'Fecha' => date('Y-m-d H:i:s'),
         'Id_Persona' => $_SESSION['Usuario'][0],
         'Tabla' => $model->getTableName(),

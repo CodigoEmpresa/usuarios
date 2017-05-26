@@ -16,6 +16,7 @@ class Modulo extends Model
     
     public function __construct()
     {
+        parent::__construct();
         $this->connection = 'db_principal';
     }
 }

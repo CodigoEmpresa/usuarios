@@ -15,6 +15,7 @@ class Pais extends Eloquent {
 
 	public function __construct()
 	{
+        parent::__construct();
 		$this->connection = config('usuarios.conexion');
 	}
 
