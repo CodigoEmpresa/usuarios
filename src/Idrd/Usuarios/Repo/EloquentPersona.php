@@ -82,7 +82,7 @@ class EloquentPersona implements PersonaInterface {
 					->whereRaw('CONCAT (Cedula, " ", Primer_Apellido, " ", Segundo_Apellido, " ", Primer_Nombre, " ", Segundo_Nombre) LIKE "%'.$key.'%"', array())
 					->orderBy('Primer_Apellido', 'asc')
 					->orderBy('Primer_Nombre', 'asc')
-					->take(100)
+					->take(1000)
 					->get();
 	}
 
