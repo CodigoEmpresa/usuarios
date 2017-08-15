@@ -11,7 +11,7 @@ use Validator;
 
 class PersonaController extends Controller {
 
-	private $repositorio_personas;
+	protected $repositorio_personas;
 
 	public function __construct(PersonaInterface $repositorio_personas)
 	{
